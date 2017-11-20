@@ -9,13 +9,15 @@ let package = Package(
     // Dependencies declare other packages that this package depends on.
     .package(url: "https://github.com/PerfectlySoft/Perfect-HTTPServer.git",
              from: "3.0.0"),
+    .package(url:"https://github.com/PerfectlySoft/Perfect-RequestLogger.git",
+             from: "3.0.0")
   ],
   targets: [
     // Targets are the basic building blocks of a package. A target can define a module or a test suite.
     // Targets can depend on other targets in this package, and on products in packages which this package depends on.
     .target(
       name: "swift-server",
-      dependencies: ["PerfectHTTPServer"],
+      dependencies: ["PerfectHTTPServer", "PerfectRequestLogger"],
       path: "."
     )
   ]

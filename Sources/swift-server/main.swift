@@ -1,6 +1,7 @@
 import PerfectHTTP
 import PerfectHTTPServer
 import PerfectLib
+import PerfectRequestLogger
 
 var routes = Routes()
 
@@ -20,10 +21,18 @@ routes.add(method: .post, uri: "/") { (request, response) in
   }
 }
 
+// Create Request Logger
+let requestLogger = RequestLogger()
+// Create our Server
+let server = HTTPServer.Server(name: "Swift Server",
+                               port: 3000,
+                               routes: routes,
+                               requestFilters: [(requestLogger, .high)],
+                               responseFilters: [(requestLogger, .low)])
+
 do {
   // Launch HTTP Server
-  try HTTPServer.launch(
-    .server(name: "Example", port: 3000, routes: routes))
+  try HTTPServer.launch(server)
 } catch {
   fatalError("\(error)")
 }
