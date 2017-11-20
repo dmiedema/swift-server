@@ -7,9 +7,12 @@ var routes = Routes()
 
 routes.add(method: .get, uri: "/") { (request, response) in
   Log.debug(message: "Params: \(request.params())")
-  response.setHeader(.contentType, value: "application/json")
-  response.appendBody(string: "{\"message\": \"Hello World\"}")
-    .completed()
+  do {
+    try response.setBody(json: ["message": "👋 Hi"]).completed()
+  } catch {
+    Log.error(message: "\(error)")
+    Log.terminal(message: "Unable to send JSON")
+  }
 }
 
 routes.add(method: .post, uri: "/") { (request, response) in
